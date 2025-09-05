@@ -1,9 +1,9 @@
 import deviceHelper from "../../util/device/deviceHelper.js";
 import myProtocolPacket from "../../util/myPacket/packet.js";
 import myServer_UDP from "../../util/server/myServer_UDP.js";
-import task from "../../util/task/task.js";
+import taskRunnable from "../../util/task/taskRunnable.js";
 
-export default class getLedStatusTask extends task{
+export default class getLedStatusRunnable extends taskRunnable{
     
     name='获取LED状态'
     desc='-'

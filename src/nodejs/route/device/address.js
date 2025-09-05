@@ -1,9 +1,9 @@
-import route from "../../util/route/route.js";
-import myProtocolPacket from "../../util/myPacket/packet.js";
+import myPacketHandler from "../../util/myPacket/myPacketHandler.js";
+import myPacket from "../../util/myPacket/packet.js";
 import deviceHelper from "../../util/device/deviceHelper.js";
 import networkHelper from "../../util/networkHelper/networkHelper.js";
 
-export default class deviceAddressRoute extends route{
+export default class deviceAddressHandler extends myPacketHandler{
 
   name='设备地址路由';
   desc='获取其它设备的地址，回应其它设备获取本设备地址';
@@ -15,11 +15,11 @@ export default class deviceAddressRoute extends route{
     
     /**
      * 
-     * @param {myProtocolPacket} req 
-     * @param {myProtocolPacket} res 
+     * @param {myPacket} req 
+     * @param {myPacket} res 
      * @param {{next:boolean,send:boolean,comm_type:string}} flag
      */
-    handle(req,res,flag){
+    handler(req,res,flag){
       if(req.getMethod()=='post'){
         let [comm_type,comm_addr] = req.getContentString().split(' ');
         let user=req.getUserString();

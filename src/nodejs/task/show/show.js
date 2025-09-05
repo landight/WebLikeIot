@@ -1,9 +1,10 @@
 import deviceHelper from "../../util/device/deviceHelper.js";
 import myServer_UDP from "../../util/server/myServer_UDP.js";
-import task from "../../util/task/task.js";
+import taskRunnable from "../../util/task/taskRunnable.js";
 import taskHelper from "../../util/task/taskHelper.js";
+import networkHelper from "../../util/networkHelper/networkHelper.js";
 
-export default class showTask extends task{
+export default class showStatusRunnable extends taskRunnable{
     
     name='显示状态任务'
     desc='显示路由状态、任务状态、设备状态和LED状态'
@@ -24,14 +25,15 @@ export default class showTask extends task{
         let routes = this.server_udp.list();
         let arr=[]
         console.clear();
-        console.log(`${new Date().toLocaleTimeString()}   当前状态\n`);
+        console.log(`${new Date().toLocaleTimeString()}   当前状态`);
+        console.log(`本机地址：${networkHelper.getLocalIPAddress()} \n`);
         console.log('路由状态');
         for(let i=0;i<routes.length;i++){
             arr.push({
-                '名称':routes[i].route.name,
+                '名称':routes[i].Handler.name,
                 'method':routes[i].method,
                 'path':routes[i].path,
-                '描述':routes[i].route.desc
+                '描述':routes[i].Handler.desc
             })
         }
         console.table(arr)

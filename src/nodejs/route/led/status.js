@@ -1,8 +1,8 @@
-import route from "../../util/route/route.js";
-import myProtocolPacket from "../../util/myPacket/packet.js";
+import myPacketHandler from "../../util/myPacket/myPacketHandler.js";
+import myPacket from "../../util/myPacket/packet.js";
 import deviceHelper from "../../util/device/deviceHelper.js";
 
-export default class ledStatusRoute extends route{
+export default class ledStatusHandler extends myPacketHandler{
     
     name='灯开关状态路由';
     desc='更新led的开关状态';
@@ -14,11 +14,11 @@ export default class ledStatusRoute extends route{
     
     /**
      * 
-     * @param {myProtocolPacket} req 
-     * @param {myProtocolPacket} res 
+     * @param {myPacket} req 
+     * @param {myPacket} res 
      * @param {{next:boolean,send:boolean,comm_type:string}} flag
      */
-    handle(req,res,flag){
+    handler(req,res,flag){
         deviceHelper.getDevice(req.getUserString()).ledStatus = req.getContentString();
     }
 }

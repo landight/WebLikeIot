@@ -40,7 +40,6 @@ void task_Scan(void)
       }
     }
   }
-  
 }
 
 void task_Start(void)

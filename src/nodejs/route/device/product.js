@@ -1,9 +1,9 @@
-import route from "../../util/route/route.js";
-import myProtocolPacket from "../../util/myPacket/packet.js";
+import myPacketHandler from "../../util/myPacket/myPacketHandler.js";
+import myPacket from "../../util/myPacket/packet.js";
 import config from "../../config.js";
 import deviceHelper from "../../util/device/deviceHelper.js";
 
-export default class deviceProductRoute extends route{
+export default class deviceProductHandler extends myPacketHandler{
 
     name='设备类型路由';
     desc='回应本设备的类型、获取其它设备的类型';
@@ -13,11 +13,11 @@ export default class deviceProductRoute extends route{
 
     /**
      * 
-     * @param {myProtocolPacket} req 
-     * @param {myProtocolPacket} res 
+     * @param {myPacket} req 
+     * @param {myPacket} res 
      * @param {{next:boolean,send:boolean,comm_type:string}} flag
      */
-    handle(req,res,flag){
+    handler(req,res,flag){
         let m=req.getMethod();
         if(m=='get'){
             res.setMethod('post');

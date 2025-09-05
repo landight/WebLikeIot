@@ -28,7 +28,7 @@ typedef struct
 
 
 void UDP_Server_Start(void);
-bool UDP_Server_Add_Handle(const char* method, const char* path, myServerHandle handle);
+bool UDP_Server_Add_Route(const char* method, const char* path, myServerHandle handle);
 void UDP_Server_Scan(void);
 
 bool UDP_Server_Send(const char *host, packet * p);

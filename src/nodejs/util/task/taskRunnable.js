@@ -1,4 +1,4 @@
-export default class task{
+export default class taskRunnable{
 
     name='未命名'
     desc='无简介'
@@ -11,7 +11,7 @@ export default class task{
      * 重写这个方法
      */
     run(){
-
+        throw Error('需要重写run方法')
     }
 
     /**

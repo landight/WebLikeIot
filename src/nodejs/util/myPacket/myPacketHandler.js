@@ -1,15 +1,14 @@
-import myPacketHandler from "../../util/myPacket/myPacketHandler.js";
-import myPacket from "../../util/myprotocol/packet.js";
+import myPacket from "./packet.js";
 
-export default class demo extends myPacketHandler{
-    
+export default class myPacketHandler{
     name='无';
     desc='无';
 
-    constructor(){
-        super();
+    constructor(handle){
+        if(handle){
+            this.handler=handle
+        }
     }
-
     
     /**
      * 
@@ -18,6 +17,6 @@ export default class demo extends myPacketHandler{
      * @param {{next:boolean,send:boolean,comm_type:string}} flag
      */
     handler(req,res,flag){
-      
+
     }
 }

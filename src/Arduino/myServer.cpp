@@ -15,8 +15,6 @@ const char* my_device_password = "" ;
 uint8_t UDP_Route_Number = 0;
 route UDP_Routes[UDP_ROUTE_MAX_NUMBER] = { 0 };
 
-
-
 void UDP_Server_Start(void) {
   Udp.begin(UDP_SERVER_PORT);
 }
@@ -53,7 +51,7 @@ void UDP_Server_Scan(void) {
   }
 }
 
-bool UDP_Server_Add_Handle(const char *method, const char *path, myServerHandle handle) {
+bool UDP_Server_Add_Route(const char *method, const char *path, myServerHandle handle) {
   if (UDP_Route_Number >= UDP_ROUTE_MAX_NUMBER) {
     return false;
   }

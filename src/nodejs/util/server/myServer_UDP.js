@@ -1,7 +1,7 @@
 import dgram from 'dgram'
-import myProtocolPacket from '../myPacket/packet.js';
+import myPacket from '../myPacket/packet.js';
 import config from '../../config.js';
-import route from '../route/route.js';
+import myPacketHandler from '../myPacket/myPacketHandler.js';
 import networkHelper from '../networkHelper/networkHelper.js';
 
 export default class myServer_UDP{
@@ -15,16 +15,16 @@ export default class myServer_UDP{
             if (rinfo.address==networkHelper.getLocalIPAddress()) {
                 return;
             }
-            let req = myProtocolPacket.parse(Array.from(msg));
-            let res = new myProtocolPacket();
+            let req = myPacket.parse(Array.from(msg));
+            let res = new myPacket();
             res.setUser(config.my_user_name);
             res.setPassword(config.my_password);
 
             let flag={next:true,send:false,comm_type:'udp'};
             for(let i=0;i<this.arr.length&&flag.next==true;i++){
                 if((this.arr[i].method == req.getMethod()||this.arr[i].method =='*' ) && (this.arr[i].path == req.getPath() ||this.arr[i].path =='*' )){
-                    flag.next=false; //除非在handle里修改next，不然只执行匹配的第一个handle
-                    this.arr[i].route.handle(req,res,flag);
+                    flag.next=false; //除非在handler里修改next，不然只执行匹配的第一个handler
+                    this.arr[i].Handler.handler(req,res,flag);
                 }
             }
 
@@ -58,20 +58,20 @@ export default class myServer_UDP{
      * 
      * @param {string} method 
      * @param {string} path 
-     * @param {(req:myProtocolPacket,res:myProtocolPacket,flag:{next:boolean,send:boolean,comm_type:string})=>void} handle 
+     * @param {(req:myPacket,res:myPacket,flag:{next:boolean,send:boolean,comm_type:string})=>void} handler 
      */
-    addHandle(method,path,handle){
-        this.arr.push({method,path,route:new route(handle)});
+    addRouteHandler(method,path,handler){
+        this.arr.push({method,path,Handler:new myPacketHandler(handler)});
     }
 
     /**
      * 
      * @param {string} method 
      * @param {string} path 
-     * @param {route} route 
+     * @param {myPacketHandler} Handler 
      */
-    addRoute(method,path,route){
-        this.arr.push({method,path,route:route});
+    addRoute(method,path,Handler){
+        this.arr.push({method,path,Handler:Handler});
     }
 
     /**
@@ -87,7 +87,7 @@ export default class myServer_UDP{
 
     /**
      * 
-     * @param {myProtocolPacket} req 
+     * @param {myPacket} req 
      * @param {(err:Error|null)=>void} callback 
      */
     boradcast(req , callback=()=>{}){
@@ -101,7 +101,7 @@ export default class myServer_UDP{
      /**
      * 
      * @param {string} addr
-     * @param {myProtocolPacket} req 
+     * @param {myPacket} req 
      * @param {(err:Error|null)=>void} callback 
      */
     send(addr,req,callback=()=>{}){

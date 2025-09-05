@@ -1,12 +1,12 @@
-import route from "../../util/route/route.js";
-import myProtocolPacket from "../../util/myPacket/packet.js";
+import myPacketHandler from "../../util/myPacket/myPacketHandler.js";
+import myPacket from "../../util/myPacket/packet.js";
 import deviceHelper from "../../util/device/deviceHelper.js";
 import device from "../../util/device/device.js";
 import myServer_UDP from "../../util/server/myServer_UDP.js";
 import networkHelper from "../../util/networkHelper/networkHelper.js";
 
 //上线用
-export default class deviceHelloRoute extends route{
+export default class deviceHelloHandler extends myPacketHandler{
     name='设备上线路由';
     desc='回应其它设备上线打招呼、本设备上线接收其它设备打招呼';
 
@@ -22,11 +22,11 @@ export default class deviceHelloRoute extends route{
     
     /**
      * 
-     * @param {myProtocolPacket} req 
-     * @param {myProtocolPacket} res 
+     * @param {myPacket} req 
+     * @param {myPacket} res 
      * @param {{next:boolean,send:boolean,comm_type:string}} flag
      */
-    handle(req,res,flag){
+    handler(req,res,flag){
         if(req.getMethod()=='get'){
             //其它设备上线，检测当前设备是否在线
             if(flag.comm_type == 'udp'){
@@ -48,8 +48,8 @@ export default class deviceHelloRoute extends route{
             }
             if(deviceHelper.getDevice(name).getProduct()==''){//如果没有获取到这个设备的类型
                 if(comm_type=='udp'){
-                    this.server_udp.send(comm_addr,new myProtocolPacket('get','/device/product')) //获取类型
-                    this.server_udp.send(comm_addr,new myProtocolPacket('get','/device/address')) //获取地址
+                    this.server_udp.send(comm_addr,new myPacket('get','/device/product')) //获取类型
+                    this.server_udp.send(comm_addr,new myPacket('get','/device/address')) //获取地址
                 }
             }
 

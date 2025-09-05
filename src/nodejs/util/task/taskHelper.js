@@ -1,4 +1,4 @@
-import task from "./task.js";
+import taskRunnable from "./taskRunnable.js";
 
 export default class taskHelper{
     static tasks=[];
@@ -27,25 +27,21 @@ export default class taskHelper{
 
     /**
      * 
-     * @param {task} task 
+     * @param {taskRunnable | ()=>void} runnable 
      * @param {number} delay 延时秒
      * @param {number} count 次数
      */
-    static addTask(task,delay,count){
-        this.tasks.push({task,delay,count,remainder:this.count%delay});
+    static addTask(runnable,delay,count){
+
+        if(runnable instanceof taskRunnable){
+            this.tasks.push({task:runnable,delay,count,remainder:this.count%delay});
+        }else if(typeof(runnable) == 'function' ) {
+            let t=new taskRunnable();
+            t.run=runnable;
+            this.tasks.push({task:t,delay,count,remainder:this.count%delay});
+        }
     }
 
-    /**
-     * 
-     * @param {()=>void} runable 
-     * @param {number} delay 延时秒
-     * @param {number} count 次数
-     */
-    static addRunable(runable,delay,count){
-        let t=new task();
-        t.run=runable;
-        this.tasks.push({task:t,delay,count,remainder:this.count%delay});
-    }
 
     static list(){
         return [...this.tasks];

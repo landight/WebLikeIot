@@ -1,4 +1,4 @@
-class myProtocolPacket{
+class myPacket{
     /**
      * 
      * @param {string} method 
@@ -73,12 +73,12 @@ class myProtocolPacket{
         return this.path;
     }
 
-    getContent(){
-        return this.content;
-    }
-
     getContentType(){
         return this.contentType;
+    }
+
+    getContent(){
+        return this.content;
     }
 
 
@@ -142,7 +142,7 @@ class myProtocolPacket{
     /**
      * 
      * @param {Uint8Array} bytes 序列化的数据 
-     * @returns  {myProtocolPacket} packet  数据包对象
+     * @returns  {myPacket} packet  数据包对象
      */
     static parse(bytes=[]){
         let coder=new TextDecoder();
@@ -169,7 +169,7 @@ class myProtocolPacket{
         let contentLen=bytesToInt(bytes.splice(0,4));
         let content=bytes.splice(0,contentLen);
         
-        return new myProtocolPacket(method,path,user,password,contentType,content);
+        return new myPacket(method,path,user,password,contentType,content);
         
     }
     /**
@@ -194,4 +194,4 @@ function bytesToInt(bytes){
 }
 
 
-export default myProtocolPacket;
+export default myPacket;

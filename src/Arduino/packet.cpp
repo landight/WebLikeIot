@@ -130,7 +130,6 @@ bool packet_parse(uint8 *buf, uint32_t buf_len, packet *p) {
 
 void packet_setMethod(packet *p, const char *method) {
   strncpy(p->method, method, MYPACKET_METHOD_MAX_LEN - 1);
-  // p->method[min(strlen(method),MYPACKET_METHOD_MAX_LEN)] = 0;
 }
 
 void packet_setPath(packet *p, const char *path) {

@@ -9,12 +9,12 @@
 
 
 
-void DeviceHelloHandle(packet *req,packet *res, route_flag* flag);
+void DeviceHelloHandler(packet *req,packet *res, route_flag* flag);
 
-void DeviceHiHandle(packet *req,packet *res, route_flag* flag);
+void DeviceHiHandler(packet *req,packet *res, route_flag* flag);
 
-void DeviceProductHandle(packet *req,packet *res, route_flag* flag);
+void DeviceProductHandler(packet *req,packet *res, route_flag* flag);
 
-void DeviceAddressHandle(packet *req,packet *res, route_flag* flag);
+void DeviceAddressHandler(packet *req,packet *res, route_flag* flag);
 
 #endif
